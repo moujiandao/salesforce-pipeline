@@ -19,7 +19,7 @@ conn = snowflake.connector.connect(
     account=os.getenv('SNOWFLAKE_ACCOUNT'),
     warehouse=os.getenv('SNOWFLAKE_WAREHOUSE'),
     database=os.getenv('SNOWFLAKE_DATABASE'),
-    schema=os.getenv('SNOWFLAKE_SCHEMA')
+    schema='RAW' #hardcoded because .env is shared by other scripts
 )
 cursor = conn.cursor()
 print("✓ Connected\n")
