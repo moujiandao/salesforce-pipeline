@@ -28,11 +28,22 @@ cursor.execute("""
     CREATE OR REPLACE FILE FORMAT CSV_FORMAT
     TYPE = 'CSV'
     FIELD_DELIMITER = ','
+    PARSE_HEADER = TRUE
+    NULL_IF = ('NULL', 'null', '')
+    EMPTY_FIELD_AS_NULL = TRUE
+    FIELD_OPTIONALLY_ENCLOSED_BY = '"'
+""")
+
+cursor.execute("""
+    CREATE OR REPLACE FILE FORMAT CSV_FORMAT_LOAD
+    TYPE = 'CSV'
+    FIELD_DELIMITER = ','
     SKIP_HEADER = 1
     NULL_IF = ('NULL', 'null', '')
     EMPTY_FIELD_AS_NULL = TRUE
     FIELD_OPTIONALLY_ENCLOSED_BY = '"'
 """)
+
 
 bucket = os.getenv('S3_BUCKET')
 cursor.execute(f"""
@@ -81,7 +92,7 @@ print("Loading Accounts...")
 cursor.execute("""
     COPY INTO ACCOUNTS
     FROM @S3_STAGE/Salesforce_Accounts.csv
-    FILE_FORMAT = CSV_FORMAT
+    FILE_FORMAT = CSV_FORMAT_LOAD
 """)
 result = cursor.fetchone()
 print(f"  ✓ Rows loaded: {result[3]}\n")
@@ -91,7 +102,7 @@ print("Loading Opportunities...")
 cursor.execute("""
     COPY INTO OPPORTUNITIES
     FROM @S3_STAGE/Salesforce_Opportunities.csv
-    FILE_FORMAT = CSV_FORMAT
+    FILE_FORMAT = CSV_FORMAT_LOAD
 """)
 result = cursor.fetchone()
 print(f"  ✓ Rows loaded: {result[3]}\n")
