@@ -12,10 +12,10 @@ This project demonstrates data engineering best practices per the following:
 
 ## Tech Stack
 
-**Python 3**
-**Salesforce**
-**Boto3**
-**Pandas**
-**dbt**
-**AWS S3**
-**Snowflake datawarehouse**
+-**Python 3**
+-**Salesforce**
+-**Boto3**
+-**Pandas**
+-**dbt**
+-**AWS S3**
+-**Snowflake datawarehouse**
