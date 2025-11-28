@@ -15,27 +15,26 @@ def get_connection():
     )
 
 
-
-def load_dim_opportunities():
+def load_fact_opportunities():
     conn = get_connection()
     cursor = conn.cursor()
     
     merge_sql = """
-    MERGE INTO ANALYTICS.DIM_OPPORTUNITIES AS target
+    MERGE INTO ANALYTICS.FACT_OPPORTUNITIES AS target
     USING (
         SELECT 
             "Opportunity ID" AS opportunity_id,
             "Opportunity Name" AS opportunity_name,
             "Account ID" AS account_id,
             "Stage" AS stage,
-            "Amount (USD)" AS amount_usd,
+            "Amount (USD)" AS amount,
             "Close Date" AS close_date,
+            TO_NUMBER(TO_CHAR(TO_DATE("Close Date"), 'YYYYMMDD')) AS close_date_key,
             "Probability (%)" AS probability,
             "Lead Source" AS lead_source,
-            "Description" AS description,
             "Created Date" AS created_date,
+            TO_NUMBER(TO_CHAR(TO_DATE("Created Date"), 'YYYYMMDD')) AS created_date_key,
             "Owner" AS owner
-
         FROM RAW.OPPORTUNITIES
     ) AS source
     ON target.opportunity_id = source.opportunity_id
@@ -44,37 +43,37 @@ def load_dim_opportunities():
         opportunity_name = source.opportunity_name,
         account_id = source.account_id,
         stage = source.stage,
-        amount_usd = source.amount_usd,
+        amount = source.amount,
         close_date = source.close_date,
+        close_date_key = source.close_date_key,
         probability = source.probability,
         lead_source = source.lead_source,
-        description = source.description,
         created_date = source.created_date,
-        owner = source.owner,
-
-        last_updated = CURRENT_TIMESTAMP()
+        created_date_key = source.created_date_key,
+        owner = source.owner
     
     WHEN NOT MATCHED THEN INSERT (
         opportunity_id, opportunity_name, account_id, stage,
-        amount_usd, close_date, probability, lead_source,
-        description, created_date, owner, last_updated
+        amount, close_date, close_date_key, probability, lead_source,
+        created_date, created_date_key, owner
     ) VALUES (
         source.opportunity_id, source.opportunity_name, source.account_id, source.stage,
-        source.amount_usd, source.close_date, source.probability, source.lead_source,
-        source.description, source.created_date, source.owner, CURRENT_TIMESTAMP()
+        source.amount, source.close_date, source.close_date_key, source.probability, 
+        source.lead_source, source.created_date, source.created_date_key, source.owner
     );
     """
     
     cursor.execute(merge_sql)
     
-    cursor.execute("SELECT COUNT(*) FROM ANALYTICS.DIM_OPPORTUNITIES")
+    cursor.execute("SELECT COUNT(*) FROM ANALYTICS.FACT_OPPORTUNITIES")
     count = cursor.fetchone()[0]
     
     conn.commit()
     cursor.close()
     conn.close()
     
-    print(f"dim_opportunities loaded: {count} total records")
+    print(f"fact_opportunities loaded: {count} total records")
+
 
 if __name__ == "__main__":
-    load_dim_opportunities()
+    load_fact_opportunities()
