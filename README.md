@@ -35,8 +35,8 @@ This project demonstrates data engineering best practices per the following:
 3. Run scripts in order
 
 ## Scripts (in order)
-upload_to_s3.py
-upload_to_snowflake.py
-generate_dim_date.py
-load_dim_account.py
-load_fact_opportunities.py
+upload_to_s3.py </br>
+upload_to_snowflake.py </br>
+generate_dim_date.py </br>
+load_dim_account.py </br>
+load_fact_opportunities.py </br>
