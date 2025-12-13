@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: raw
+    database: SALESFORCE_DATA
+    schema: RAW
+    tables:
+      - name: ACCOUNTS
+      - name: OPPORTUNITIES

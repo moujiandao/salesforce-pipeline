@@ -1,0 +1,192 @@
+==================== 2025-11-30 02:15:18.459925 | 019ad28b-08ba-78d1-9964-c2b4cab96ee1 ====================
+dbt-fusion 2.0.0-preview.57
+   Loading ~/.dbt/profiles.yml
+ Debugging profile: dev
+ Debugging dbt version: 2.0.0-preview.57
+ Debugging platform: macos aarch64 (unix)
+ Debugging adapter type: snowflake (remote)
+ Debugging dependencies:
+  git: OK
+ Debugging connection:
+  "account": "whdekzz-ycb25194",
+  "user": "moujiandao",
+  "database": "SALESFORCE_DATA",
+  "warehouse": "COMPUTE_WH",
+  "schema": "ANALYTICS",
+  "role": "ACCOUNTADMIN"
+02:15:19.126716 [debug]: Query executed on node unknown:
+select 1 as id
+ Debugging connection test: OK
+  Debugged All checks passed!
+New version available 2.0.0-preview.72 (run `dbt system update`)
+02:15:19.654522 [info ]: 
+==================== Execution Summary =====================
+Finished 'debug' successfully for target 'dev' [1.2s]
+==================== 2025-12-01 01:40:57.709201 | 019ad791-f2e3-7512-a7ba-ded1216b69fa ====================
+dbt-fusion 2.0.0-preview.57
+   Loading ~/.dbt/profiles.yml
+ Debugging profile: dev
+ Debugging dbt version: 2.0.0-preview.57
+ Debugging platform: macos aarch64 (unix)
+ Debugging adapter type: snowflake (remote)
+ Debugging dependencies:
+  git: OK
+ Debugging connection:
+  "account": "whdekzz-ycb25194",
+  "user": "moujiandao",
+  "database": "SALESFORCE_DATA",
+  "warehouse": "COMPUTE_WH",
+  "schema": "ANALYTICS",
+  "role": "ACCOUNTADMIN"
+01:40:59.347322 [debug]: Query executed on node unknown:
+select 1 as id
+ Debugging connection test: OK
+  Debugged All checks passed!
+New version available 2.0.0-preview.72 (run `dbt system update`)
+01:40:59.864494 [info ]: 
+==================== Execution Summary =====================
+Finished 'debug' successfully for target 'dev' [2.2s]
+==================== 2025-12-01 01:47:15.711525 | 019ad797-b77e-7dd2-beb7-4d514cd08d34 ====================
+dbt-fusion 2.0.0-preview.57
+   Loading ~/.dbt/profiles.yml
+01:47:16.791982 [debug]: Query executed on node unknown:
+describe table "SALESFORCE_DATA"."RAW"."ACCOUNTS"
+01:47:16.988961 [debug]: Query executed on node unknown:
+describe table "SALESFORCE_DATA"."RAW"."OPPORTUNITIES"
+ Downloading SALESFORCE_DATA.RAW.ACCOUNTS (schema)
+ Downloading SALESFORCE_DATA.RAW.OPPORTUNITIES (schema)
+01:47:17.609708 [debug]: Query executed on node unknown:
+show terse schemas in database SALESFORCE_DATA
+    limit 10000
+/* {"app":"dbt","dbt_version":"2.0.0","profile_name":"dbt_salesforce","target_name":"dev","connection_name":""} */
+01:47:18.070051 [debug]: Query executed on node model.dbt_salesforce.dim_account:
+SHOW OBJECTS IN SCHEMA "SALESFORCE_DATA"."ANALYTICS" LIMIT 10000
+01:47:18.223588 [debug]: Query executed on node model.dbt_salesforce.dim_account:
+drop table if exists SALESFORCE_DATA.ANALYTICS.DIM_ACCOUNT cascade
+/* {"app":"dbt","dbt_version":"2.0.0","profile_name":"dbt_salesforce","target_name":"dev","node_id":"model.dbt_salesforce.dim_account"} */
+01:47:18.402867 [debug]: Query executed on node model.dbt_salesforce.dim_opportunities:
+SHOW OBJECTS IN SCHEMA "SALESFORCE_DATA"."ANALYTICS" LIMIT 10000
+01:47:18.567470 [debug]: Query executed on node model.dbt_salesforce.dim_account:
+create or replace   view SALESFORCE_DATA.ANALYTICS.dim_account
+  
+   as (
+    SELECT 
+    "Account ID" AS account_id,
+    "Account Name" AS account_name,
+    "Type" AS account_type,
+    "Industry" AS industry,
+    "Annual Revenue" AS annual_revenue,
+    "Billing City" AS billing_city,
+    "Billing State" AS billing_state,
+    "Billing Country" AS billing_country,
+    "Ownership" AS ownership,
+    "Rating" AS rating,
+    "Number of Employees" AS number_of_employees,
+    "Account Source" AS account_source,
+    CURRENT_TIMESTAMP() AS last_updated
+FROM SALESFORCE_DATA.RAW.ACCOUNTS
+  )
+/* {"app":"dbt","dbt_version":"2.0.0","profile_name":"dbt_salesforce","target_name":"dev","node_id":"model.dbt_salesforce.dim_account"} */
+ Succeeded [  0.89s] model ANALYTICS.dim_account (view)
+01:47:18.812662 [debug]: Query executed on node model.dbt_salesforce.dim_opportunities:
+create or replace   view SALESFORCE_DATA.ANALYTICS.dim_opportunities
+  
+   as (
+    SELECT 
+    "Opportunity ID" AS opportunity_id,
+    "Account ID" AS account_id,
+    "Opportunity Name" AS opportunity_name,
+    "Stage" AS stage,
+    "Amount (USD)" AS amount,
+    "Probability (%)" AS probability,
+    "Lead Source" AS lead_source,
+    "Close Date" AS close_date,
+    TO_NUMBER(TO_CHAR("Close Date", 'YYYYMMDD')) AS close_date_key,
+    "Created Date" AS created_date,
+    TO_NUMBER(TO_CHAR("Created Date", 'YYYYMMDD')) AS created_date_key,
+    "Owner" AS owner
+FROM SALESFORCE_DATA.RAW.OPPORTUNITIES
+  )
+/* {"app":"dbt","dbt_version":"2.0.0","profile_name":"dbt_salesforce","target_name":"dev","node_id":"model.dbt_salesforce.dim_opportunities"} */
+ Succeeded [  1.13s] model ANALYTICS.dim_opportunities (view)
+New version available 2.0.0-preview.72 (run `dbt system update`)
+01:47:18.940971 [info ]: 
+==================== Execution Summary =====================
+Finished 'run' successfully for target 'dev' [3.2s]
+Processed: 2 models
+Summary: 2 total | 2 success
+==================== 2025-12-01 01:51:45.422551 | 019ad79b-d503-7c12-a26c-3f53b9b3d898 ====================
+dbt-fusion 2.0.0-preview.57
+   Loading ~/.dbt/profiles.yml
+01:51:46.383589 [debug]: Query executed on node unknown:
+show terse schemas in database SALESFORCE_DATA
+    limit 10000
+/* {"app":"dbt","dbt_version":"2.0.0","profile_name":"dbt_salesforce","target_name":"dev","connection_name":""} */
+01:51:47.009707 [debug]: Query executed on node model.dbt_salesforce.fact_opportunities:
+SHOW OBJECTS IN SCHEMA "SALESFORCE_DATA"."ANALYTICS" LIMIT 10000
+01:51:47.176096 [debug]: Query executed on node model.dbt_salesforce.fact_opportunities:
+drop table if exists SALESFORCE_DATA.ANALYTICS.FACT_OPPORTUNITIES cascade
+/* {"app":"dbt","dbt_version":"2.0.0","profile_name":"dbt_salesforce","target_name":"dev","node_id":"model.dbt_salesforce.fact_opportunities"} */
+01:51:47.429028 [debug]: Query executed on node model.dbt_salesforce.dim_account:
+SHOW OBJECTS IN SCHEMA "SALESFORCE_DATA"."ANALYTICS" LIMIT 10000
+01:51:47.544847 [debug]: Query executed on node model.dbt_salesforce.fact_opportunities:
+create or replace   view SALESFORCE_DATA.ANALYTICS.fact_opportunities
+  
+   as (
+    SELECT 
+    "Opportunity ID" AS opportunity_id,
+    "Account ID" AS account_id,
+    "Opportunity Name" AS opportunity_name,
+    "Stage" AS stage,
+    "Amount (USD)" AS amount,
+    "Probability (%)" AS probability,
+    "Lead Source" AS lead_source,
+    "Close Date" AS close_date,
+    TO_NUMBER(TO_CHAR("Close Date", 'YYYYMMDD')) AS close_date_key,
+    "Created Date" AS created_date,
+    TO_NUMBER(TO_CHAR("Created Date", 'YYYYMMDD')) AS created_date_key,
+    "Owner" AS owner
+FROM SALESFORCE_DATA.RAW.OPPORTUNITIES
+  )
+/* {"app":"dbt","dbt_version":"2.0.0","profile_name":"dbt_salesforce","target_name":"dev","node_id":"model.dbt_salesforce.fact_opportunities"} */
+ Succeeded [  1.09s] model ANALYTICS.fact_opportunities (view)
+01:51:48.029167 [debug]: Query executed on node model.dbt_salesforce.dim_account:
+create or replace   view SALESFORCE_DATA.ANALYTICS.dim_account
+  
+   as (
+    SELECT 
+    "Account ID" AS account_id,
+    "Account Name" AS account_name,
+    "Type" AS account_type,
+    "Industry" AS industry,
+    "Annual Revenue" AS annual_revenue,
+    "Billing City" AS billing_city,
+    "Billing State" AS billing_state,
+    "Billing Country" AS billing_country,
+    "Ownership" AS ownership,
+    "Rating" AS rating,
+    "Number of Employees" AS number_of_employees,
+    "Account Source" AS account_source,
+    CURRENT_TIMESTAMP() AS last_updated
+FROM SALESFORCE_DATA.RAW.ACCOUNTS
+  )
+/* {"app":"dbt","dbt_version":"2.0.0","profile_name":"dbt_salesforce","target_name":"dev","node_id":"model.dbt_salesforce.dim_account"} */
+ Succeeded [  1.57s] model ANALYTICS.dim_account (view)
+New version available 2.0.0-preview.72 (run `dbt system update`)
+01:51:48.248558 [info ]: 
+==================== Execution Summary =====================
+Finished 'run' successfully for target 'dev' [2.8s]
+Processed: 2 models
+Summary: 2 total | 2 success
+==================== 2025-12-13 07:47:45.755779 | 019b16ae-13da-7e82-b4e5-ba57273ea361 ====================
+dbt-fusion 2.0.0-preview.57
+   Loading ~/.dbt/profiles.yml
+07:47:47.554472 [error]: dbt9002: Unexpected Result: execution error: Configuration Error: execution error: [Snowflake] 390913 (08004): Your free trial has ended and all of your virtual warehouses have been suspended. Add billing information in the Snowflake web UI to continue using the full set of Snowflake features.
+(in :2:3)
+(in dbt_internal_packages/dbt-adapters/macros/adapters/schema.sql:8:12)
+(in dbt_internal_packages/dbt-adapters/macros/etc/statement.sql:14:35)
+New version available 2.0.0-preview.85 (run `dbt system update`)
+07:47:47.642289 [info ]: 
+==================== Execution Summary =====================
+Finished 'run' with 1 error for target 'dev' [1.9s]
+Processed: 2 models
