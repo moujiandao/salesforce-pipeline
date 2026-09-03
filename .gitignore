@@ -1,6 +1,15 @@
-data/*.csv
+.env
+.env.*
+!.env.example
 .aws/
+.DS_Store
+.venv/
 __pycache__/
+*.py[cod]
 
-echo ".env" >> .gitignore
-echo "*.env" >> .gitignore
+data/*.csv
+logs/
+dbt_salesforce/logs/
+dbt_salesforce/target/
+dbt_salesforce/dbt_packages/
+dbt_salesforce/dbt_internal_packages/

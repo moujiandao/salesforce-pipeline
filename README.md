@@ -31,8 +31,9 @@ This project demonstrates data engineering best practices per the following:
 
 ## Setup
 1. Clone repo
-2. Create your own '.env' file with credentials.
-3. Run scripts in order
+2. Copy `.env.example` to `.env` and add your Snowflake settings and S3 bucket name.
+3. Configure AWS credentials through the standard Boto3 credential chain.
+4. Run the scripts in order.
 
 ## Scripts (in order)
 upload_to_s3.py </br>
